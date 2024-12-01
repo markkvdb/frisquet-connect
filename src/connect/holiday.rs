@@ -69,26 +69,26 @@ impl Assert for HolidayMsg {
 }
 
 impl HolidayMsg {
-    fn start(&self) -> chrono::NaiveDateTime {
+    fn start(&self) -> chrono::DateTime<chrono::Utc> {
         let secs: i64 = (((self.start[2] as u32) << 24)
             + ((self.start[3] as u32) << 16)
             + ((self.start[0] as u32) << 8)
             + self.start[1] as u32) as i64;
-        chrono::NaiveDateTime::from_timestamp_opt(secs, 0).unwrap()
+        return chrono::DateTime::from_timestamp(secs, 0).unwrap();
     }
-    fn end(&self) -> chrono::NaiveDateTime {
+    fn end(&self) -> chrono::DateTime<chrono::Utc> {
         let secs: i64 = (((self.end[2] as u32) << 24)
             + ((self.end[3] as u32) << 16)
             + ((self.end[0] as u32) << 8)
             + self.end[1] as u32) as i64;
-        chrono::NaiveDateTime::from_timestamp_opt(secs, 0).unwrap()
+        return chrono::DateTime::from_timestamp(secs, 0).unwrap();
     }
-    fn date1(&self) -> chrono::NaiveDateTime {
+    fn date1(&self) -> chrono::DateTime<chrono::Utc> {
         let secs: i64 = (((self.date1[2] as u32) << 24)
             + ((self.date1[3] as u32) << 16)
             + ((self.date1[0] as u32) << 8)
             + self.date1[1] as u32) as i64;
-        chrono::NaiveDateTime::from_timestamp_opt(secs, 0).unwrap()
+        return chrono::DateTime::from_timestamp(secs, 0).unwrap()
     }
 }
 
