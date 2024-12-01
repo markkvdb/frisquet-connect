@@ -33,11 +33,10 @@ pub struct Frisquet {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct HAConfig {
-    pub host: String,
-    pub port: u16,
+    pub url: String,
     pub token: String,
     pub entity_id: String,
-    pub temperature_field: String,
+    pub temperature_field: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]

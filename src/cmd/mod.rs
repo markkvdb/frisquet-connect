@@ -82,7 +82,7 @@ pub fn parse() -> Cli {
 }
 
 impl Cli {
-    pub fn run(
+    pub async fn run(
         &self,
         rf: &mut Box<dyn RFClient>,
         config: &mut Config,
@@ -98,7 +98,7 @@ impl Cli {
             Some(Commands::Data3) => data3::run(rf, config),
             Some(Commands::Data4) => data4::run(rf, config),
             Some(Commands::Sonde { temp }) => sonde::run(rf, temp, config),
-            Some(Commands::Run) => run::run(rf, config),
+            Some(Commands::Run) => run::run(rf, config).await,
             None => {
                 println!("main");
                 Ok(())

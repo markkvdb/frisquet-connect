@@ -7,7 +7,7 @@ use crate::connect::sonde::{send_init, send_temperature};
 use crate::datasource::externaltemperature::homeassistant;
 use crate::rf::RFClient;
 
-pub fn run(rf: &mut Box<dyn RFClient>, config: &mut Config) -> Result<(), Box<dyn Error>> {
+pub async fn run(rf: &mut Box<dyn RFClient>, config: &mut Config) -> Result<(), Box<dyn Error>> {
     let sonde_config = config.sonde()?;
     if sonde_config.send_init.unwrap_or(false) {
         let (_meta, _sensor) = send_init(rf, sonde_config)?;
@@ -16,7 +16,7 @@ pub fn run(rf: &mut Box<dyn RFClient>, config: &mut Config) -> Result<(), Box<dy
     config.write()?;
 
     loop {
-        let temperature = homeassistant::get_ha_client(config.home_assistant()?)?;
+        let temperature = homeassistant::get_ha_temperature(config.home_assistant()?).await?;
         println!("Set temperature to: {:.1}", temperature);
         let (_meta, _sensor) = send_temperature(rf, config.sonde()?, temperature)?;
 
