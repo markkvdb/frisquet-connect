@@ -139,6 +139,7 @@ where
 {
     let (_, meta) = Metadata::from_bytes((payload, 0))?;
     let (_, data) = T::from_bytes((&payload[7..], 0))?;
+    println!("meta: {:?}", meta);
     assert!(data.assert());
     Ok((meta, data))
 }

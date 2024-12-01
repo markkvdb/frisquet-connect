@@ -35,6 +35,11 @@ pub fn connect_promiscuous(
             None => match meta.msg_type {
                 0x17 => {
                     println!("{:#?}", hex::encode(payload.split_at(4).0));
+                    if payload.len() < 8 {
+                        println!("payload too short: {}", payload.len());
+                        continue;
+                    }
+
                     match payload[7..11] {
                         [0xa1, 0x54, 0x00, 0x18] => {
                             let data = match from_bytes::<area::AreaMsg>(payload) {
